@@ -209,9 +209,32 @@
 	MarkerClass.prototype.init = function ( eventObj, gMap ) {
 		this.coordsStr = eventObj.getCoordsStr();
 		this.eventList = [eventObj.id];
+
+		// Calculate time difference in hours
+		var timeDifference = (eventObj.dateStartObj.getTime() - Date.now()) / (1000 * 60 * 60);
+		
+		// Choose marker color based on time difference
+		var markerColor;
+		if (timeDifference < 168) {
+			markerColor = 'red'; // for events within the next 24 hours
+		} else if (timeDifference < 336) {
+			markerColor = 'yellow'; // for events within the next 48 hours
+		} else {
+			markerColor = 'green'; // for events more than 48 hours away
+		}
+
+		
 		this.googleMarker = new google.maps.Marker({
 			position: new google.maps.LatLng(eventObj.lt, eventObj.lg),
-			map: gMap
+			map: gMap,
+			icon: {
+				path: google.maps.SymbolPath.CIRCLE,
+				fillColor: markerColor,
+				fillOpacity: 0.8,
+				strokeColor: 'black',
+				strokeWeight: 1,
+				scale: 10
+			}
 		});
 
 		// associate with eventObj
