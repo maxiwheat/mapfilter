@@ -223,17 +223,13 @@
 			markerColor = 'green'; // for events more than 48 hours away
 		}
 
+		let url = "http://maps.google.com/mapfiles/ms/icons/" + markerColor + "-dot.png";
 		
 		this.googleMarker = new google.maps.Marker({
 			position: new google.maps.LatLng(eventObj.lt, eventObj.lg),
 			map: gMap,
 			icon: {
-				path: google.maps.SymbolPath.CIRCLE,
-				fillColor: markerColor,
-				fillOpacity: 0.8,
-				strokeColor: 'black',
-				strokeWeight: 1,
-				scale: 10
+				url: url
 			}
 		});
 
